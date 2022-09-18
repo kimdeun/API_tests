@@ -1,2 +1,2 @@
-public class ListOfOrdersTests {
+public class ListOfOrdersTests extends BaseTest {
 }
