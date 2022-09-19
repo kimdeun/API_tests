@@ -10,7 +10,7 @@ public class CreatingACourierTests extends BaseTest {
     public void createNewCourier() {
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier");
         given()
                 .header("Content-type", "application/json")
@@ -24,7 +24,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingTwoIdenticalCouriers() {
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier");
         int firstCourierId = given()
                 .header("Content-type", "application/json")
@@ -33,7 +33,7 @@ public class CreatingACourierTests extends BaseTest {
                 .then().extract().path("id");
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier");
         int secondCourierId = given()
                 .header("Content-type", "application/json")
@@ -48,7 +48,7 @@ public class CreatingACourierTests extends BaseTest {
     public void returnsTheResponseCode201() {
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier")
                 .then().statusCode(201);
     }
@@ -58,7 +58,7 @@ public class CreatingACourierTests extends BaseTest {
     public void returnsOkTrue() {
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier")
                 .then().assertThat().body("ok", equalTo(true));
     }
@@ -68,7 +68,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutFirstNameReturnsTheResponseCode201() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutFirstName)
+                .body(creatingCourierWithoutFirstName)
                 .post("/api/v1/courier")
                 .then().statusCode(201);
     }
@@ -78,11 +78,11 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingTwoIdenticalCouriersReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier");
         given()
                 .header("Content-type", "application/json")
-                .body(newCourier)
+                .body(creatingNewCourier)
                 .post("/api/v1/courier")
                 .then().statusCode(409)
                 .assertThat().body("message", equalTo("Этот логин уже используется"));
@@ -93,7 +93,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutFirstName() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutFirstName)
+                .body(creatingCourierWithoutFirstName)
                 .post("/api/v1/courier");
         given()
                 .header("Content-type", "application/json")
@@ -107,7 +107,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutLogin() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutLogin)
+                .body(creatingCourierWithoutLogin)
                 .post("/api/v1/courier");
         given()
                 .header("Content-type", "application/json")
@@ -121,11 +121,25 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutPassword() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutPassword)
+                .body(creatingCourierWithoutPassword)
                 .post("/api/v1/courier");
         given()
                 .header("Content-type", "application/json")
                 .body(courierAuthorizationWithoutPassword)
+                .post("/api/v1/courier/login")
+                .then().assertThat().body("id", is(nullValue()));
+    }
+
+    //Проверяем, что создать курьера без логина и пароля нельзя
+    @Test
+    public void creatingACourierWithoutLoginAndPassword() {
+        given()
+                .header("Content-type", "application/json")
+                .body(creatingCourierWithoutLoginAndPassword)
+                .post("/api/v1/courier");
+        given()
+                .header("Content-type", "application/json")
+                .body(courierAuthorizationWithoutLoginAndPassword)
                 .post("/api/v1/courier/login")
                 .then().assertThat().body("id", is(nullValue()));
     }
@@ -135,7 +149,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutLoginReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutLogin)
+                .body(creatingCourierWithoutLogin)
                 .post("/api/v1/courier")
                 .then().statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
@@ -146,7 +160,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutPassword)
+                .body(creatingCourierWithoutPassword)
                 .post("/api/v1/courier")
                 .then().statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
@@ -157,7 +171,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutLoginAndPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutLoginAndPassword)
+                .body(creatingCourierWithoutLoginAndPassword)
                 .post("/api/v1/courier")
                 .then().statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
@@ -168,7 +182,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutLoginAndFirstNameReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutLoginAndFirstName)
+                .body(creatingCourierWithoutLoginAndFirstName)
                 .post("/api/v1/courier")
                 .then().statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
@@ -179,7 +193,7 @@ public class CreatingACourierTests extends BaseTest {
     public void creatingACourierWithoutPasswordAndFirstNameReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
-                .body(courierWithoutPasswordAndFirstName)
+                .body(creatingCourierWithoutPasswordAndFirstName)
                 .post("/api/v1/courier")
                 .then().statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
