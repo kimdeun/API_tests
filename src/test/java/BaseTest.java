@@ -26,7 +26,7 @@ public class BaseTest {
     }
 
     @After
-    public void deleteCourierById() {
+    public void tearDown() {
         try{
             int id = given()
                     .header("Content-type", "application/json")
