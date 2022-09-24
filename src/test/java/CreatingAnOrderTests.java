@@ -1,3 +1,4 @@
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -27,6 +28,7 @@ public class CreatingAnOrderTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Проверяем, что можно создать заказ с разными цветами самокатов")
     public void creatingAnOrderWithDifferentColorsOfScooter() {
         int track = given()
                 .header("Content-type", "application/json")
@@ -40,6 +42,7 @@ public class CreatingAnOrderTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Проверяем, что при создании заказа возвращается track номер")
     public void checksThatAfterCreatingOrderTrackIsNotNull() {
         given()
                 .header("Content-type", "application/json")

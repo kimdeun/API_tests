@@ -1,3 +1,4 @@
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
@@ -5,8 +6,8 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 
 public class CreatingACourierTests extends BaseTest {
-    //Проверяем, что курьера можно создать
     @Test
+    @DisplayName("Проверяем, что курьера можно создать")
     public void createNewCourier() {
         given()
                 .header("Content-type", "application/json")
@@ -19,8 +20,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().assertThat().body("id", notNullValue());
     }
 
-    //Проверяем, что нельзя создать двух одинаковых курьеров
     @Test
+    @DisplayName("Проверяем, что нельзя создать двух одинаковых курьеров")
     public void creatingTwoIdenticalCouriers() {
         given()
                 .header("Content-type", "application/json")
@@ -43,8 +44,8 @@ public class CreatingACourierTests extends BaseTest {
         assertEquals(firstCourierId, secondCourierId);
     }
 
-    //Проверяем, что запрос возвращает правильный код ответа
     @Test
+    @DisplayName("Проверяем, что запрос возвращает правильный код ответа")
     public void returnsTheResponseCode201() {
         given()
                 .header("Content-type", "application/json")
@@ -53,8 +54,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().statusCode(201);
     }
 
-    //Проверяем, что успешный запрос возвращает ok: true
     @Test
+    @DisplayName("Проверяем, что успешный запрос возвращает ok: true")
     public void returnsOkTrue() {
         given()
                 .header("Content-type", "application/json")
@@ -63,8 +64,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().assertThat().body("ok", equalTo(true));
     }
 
-    //Проверяем, что если нет имени, запрос возвращает код ответа 201
     @Test
+    @DisplayName("Проверяем, что если нет имени, запрос возвращает код ответа 201")
     public void creatingACourierWithoutFirstNameReturnsTheResponseCode201() {
         given()
                 .header("Content-type", "application/json")
@@ -73,8 +74,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().statusCode(201);
     }
 
-    //Проверяем, что если создать пользователя с логином, который уже есть, возвращается ошибка
     @Test
+    @DisplayName("Проверяем, что если создать пользователя с логином, который уже есть, возвращается ошибка")
     public void creatingTwoIdenticalCouriersReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -88,8 +89,8 @@ public class CreatingACourierTests extends BaseTest {
                 .assertThat().body("message", equalTo("Этот логин уже используется"));
     }
 
-    //Проверяем, что можно создать курьера без имени
     @Test
+    @DisplayName("Проверяем, что можно создать курьера без имени")
     public void creatingACourierWithoutFirstName() {
         given()
                 .header("Content-type", "application/json")
@@ -102,8 +103,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().assertThat().body("id", is(notNullValue()));
     }
 
-    //Проверяем, что создать курьера без логина нельзя
     @Test
+    @DisplayName("Проверяем, что создать курьера без логина нельзя")
     public void creatingACourierWithoutLogin() {
         given()
                 .header("Content-type", "application/json")
@@ -116,8 +117,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().assertThat().body("id", is(nullValue()));
     }
 
-    //Проверяем, что создать курьера без пароля нельзя
     @Test
+    @DisplayName("Проверяем, что создать курьера без пароля нельзя")
     public void creatingACourierWithoutPassword() {
         given()
                 .header("Content-type", "application/json")
@@ -130,8 +131,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().assertThat().body("id", is(nullValue()));
     }
 
-    //Проверяем, что создать курьера без логина и пароля нельзя
     @Test
+    @DisplayName("Проверяем, что создать курьера без логина и пароля нельзя")
     public void creatingACourierWithoutLoginAndPassword() {
         given()
                 .header("Content-type", "application/json")
@@ -144,8 +145,8 @@ public class CreatingACourierTests extends BaseTest {
                 .then().assertThat().body("id", is(nullValue()));
     }
 
-    //Проверяем, что если нет логина, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если нет логина, запрос возвращает ошибку")
     public void creatingACourierWithoutLoginReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -155,8 +156,8 @@ public class CreatingACourierTests extends BaseTest {
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
-    //Проверяем, что если нет пароля, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если нет пароля, запрос возвращает ошибку")
     public void creatingACourierWithoutPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -166,8 +167,8 @@ public class CreatingACourierTests extends BaseTest {
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
-    //Проверяем, что если нет логина и пароля, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если нет логина и пароля, запрос возвращает ошибку")
     public void creatingACourierWithoutLoginAndPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -177,8 +178,8 @@ public class CreatingACourierTests extends BaseTest {
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
-    //Проверяем, что если нет логина и имени, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если нет логина и имени, запрос возвращает ошибку")
     public void creatingACourierWithoutLoginAndFirstNameReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -188,8 +189,8 @@ public class CreatingACourierTests extends BaseTest {
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
-    //Проверяем, что если нет логина и имени, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если нет логина и имени, запрос возвращает ошибку")
     public void creatingACourierWithoutPasswordAndFirstNameReturnsAnError() {
         given()
                 .header("Content-type", "application/json")

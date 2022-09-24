@@ -1,11 +1,12 @@
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class CourierAuthorizationTests extends BaseTest {
-    //Проверяем, что курьер может авторизоваться
     @Test
+    @DisplayName("Проверяем, что курьер может авторизоваться")
     public void courierAuthorization() {
         given()
                 .header("Content-type", "application/json")
@@ -18,8 +19,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .then().statusCode(200);
     }
 
-    //Проверяем, что без логина авторизоваться нельзя
     @Test
+    @DisplayName("Проверяем, что без логина авторизоваться нельзя")
     public void courierAuthorizationWithoutLogin() {
         given()
                 .header("Content-type", "application/json")
@@ -32,8 +33,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .then().assertThat().body("id", is(nullValue()));
     }
 
-    //Проверяем, что без пароля авторизоваться нельзя
     @Test
+    @DisplayName("Проверяем, что без пароля авторизоваться нельзя")
     public void courierAuthorizationWithoutPassword() {
         given()
                 .header("Content-type", "application/json")
@@ -46,8 +47,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .then().assertThat().body("id", is(nullValue()));
     }
 
-    //Проверяем, что если логин некорректный, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если логин некорректный, запрос возвращает ошибку")
     public void courierAuthorizationWithIncorrectLoginReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -61,8 +62,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .assertThat().body("message", equalTo("Учетная запись не найдена"));
     }
 
-    //Проверяем, что если пароль некорректный, запрос возвращает ошибку
     @Test
+    @DisplayName("Проверяем, что если пароль некорректный, запрос возвращает ошибку")
     public void courierAuthorizationWithIncorrectPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -76,8 +77,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .assertThat().body("message", equalTo("Учетная запись не найдена"));
     }
 
-    //Проверяем, что система вернёт ошибку, если авторизоваться без логина
     @Test
+    @DisplayName("Проверяем, что система вернёт ошибку, если авторизоваться без логина")
     public void courierAuthorizationWithoutLoginReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -90,8 +91,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .then().assertThat().body("message", equalTo("Недостаточно данных для входа"));
     }
 
-    //Проверяем, что система вернёт ошибку, если авторизоваться без пароля
     @Test
+    @DisplayName("Проверяем, что система вернёт ошибку, если авторизоваться без пароля")
     public void courierAuthorizationWithoutPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -104,8 +105,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .then().assertThat().body("message", equalTo("Недостаточно данных для входа"));
     }
 
-    //Проверяем, что система вернёт ошибку, если авторизоваться без логина и пароля
     @Test
+    @DisplayName("Проверяем, что система вернёт ошибку, если авторизоваться без логина и пароля")
     public void courierAuthorizationWithoutLoginAndPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -118,8 +119,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .then().assertThat().body("message", equalTo("Недостаточно данных для входа"));
     }
 
-    //Проверяем, что система вернёт ошибку, если авторизоваться под несуществующим пользователем
     @Test
+    @DisplayName("Проверяем, что система вернёт ошибку, если авторизоваться под несуществующим пользователем")
     public void courierAuthorizationWithIncorrectLoginAndPasswordReturnsAnError() {
         given()
                 .header("Content-type", "application/json")
@@ -129,8 +130,8 @@ public class CourierAuthorizationTests extends BaseTest {
                 .assertThat().body("message", equalTo("Учетная запись не найдена"));
     }
 
-    //Проверяем, что успешный запрос возвращает id
     @Test
+    @DisplayName("Проверяем, что успешный запрос возвращает id")
     public void courierAuthorizationReturnsId() {
         given()
                 .header("Content-type", "application/json")
